@@ -1,0 +1,23 @@
+!URxvt.letterSpace: -1
+!URxvt.internalBorder: 20
+URxvt.font: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1, -*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt.boldFont: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1, -*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt.scrollBar: false
+URxvt.perl-ext-common: default,matcher,selection-to-clipboard
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+!urxvt*depth: 32
+!urxvt*background: rgba:0000/0000/0000/dddd
+URxvt*cursorUnderline: true
+
+
+rofi.color-enabled: true
+rofi.hide-scrollbar: true
+
+Xft.dpi: 96
+Xft.antialias: true      
+Xft.hinting: true
+Xft.rgba: rgb 
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
