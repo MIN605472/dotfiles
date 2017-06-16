@@ -12,40 +12,53 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
-"Plug 'chriskempson/base16-vim'
-"Plug 'rakr/vim-one'
+" Plug 'chriskempson/base16-vim'
+Plug 'rakr/vim-one'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'vim-airline/vim-airline'
-Plug 'itmammoth/doorboy.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-startify'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'junegunn/gv.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vimwiki/vimwiki'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'junegunn/goyo.vim'
+Plug 'w0rp/ale'
+" Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
+" }}}
+
+" commentary settings {{{
+autocmd FileType c,cpp setlocal commentstring=//\ %s
+autocmd FileType cmake setlocal commentstring=#\ %s
 " }}}
 
 " airline settings {{{
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ""
 let g:airline_right_sep = ""
-"let g:airline_theme='gruvbox'
-"let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='one'
+" let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 " }}}
 
 " theme settings {{{
 syntax on
-"if (has("termguicolors"))
-"  set termguicolors
-"endif
+if (has("termguicolors"))
+  set termguicolors
+endif
 set t_Co=256
+colorscheme one
 set background=dark
-colorscheme gruvbox
 " }}}
 
 " general settings {{{
+set nocompatible
 filetype plugin indent on
 set number
 "set cursorline
