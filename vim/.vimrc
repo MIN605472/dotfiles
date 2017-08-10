@@ -1,7 +1,11 @@
 " vim:set fdm=marker:
 " plugin manager {{{
 if has('unix')
-  let s:vim_home = $HOME . '/.vim'
+  if has('nvim')
+    let s:vim_home = $HOM . '/.local/share/nvim/site'
+  else
+    let s:vim_home = $HOME . '/.vim'
+  endif
   let s:plug_script = s:vim_home . '/autoload/plug.vim'
   if empty(glob(s:plug_script))
     exe 'silent !curl -fLo ' . s:plug_script . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -28,9 +32,21 @@ Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/goyo.vim'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-repeat'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
 call plug#end()
+" }}}
+
+" codefmt setting {{{
+" call maktaba#plugin#Detect()
+call glaive#Install()
+Glaive codefmt plugin[mappings]
+Glaive codefmt clang_format_style='google'
+Glaive codefmt clang_format_executable='clang-format'
 " }}}
 
 " commentary settings {{{
@@ -43,7 +59,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ""
 let g:airline_right_sep = ""
 let g:airline_theme='one'
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 " }}}
 
@@ -54,13 +70,13 @@ if (has("termguicolors"))
 endif
 set t_Co=256
 colorscheme one
-set background=dark
+set background=light
 " }}}
 
 " general settings {{{
 set nocompatible
 filetype plugin indent on
-set number
+set nonumber
 "set cursorline
 "set rnu
 set expandtab
@@ -88,6 +104,7 @@ set guioptions-=r
 set guioptions-=L
 set guifont=Inconsolata:h11
 set backspace=indent,eol,start
+set guifont=Fantasque\ Sans\ Mono\ 9
 " }}}
 
 " netrw settings {{{
@@ -103,5 +120,5 @@ let g:netrw_special_syntax = 1
 " mappings {{{
 let mapleader = " "
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
-nnoremap <leader>m :AsyncRun make -C build<CR>:copen<CR>
+nnoremap <leader>m :AsyncRun make -C build && build/Game<CR>
 " }}}
