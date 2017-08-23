@@ -11,6 +11,7 @@ URxvt.matcher.button: 1
 URxvt*cursorUnderline: true
 
 
+rofi.font: Iosevka Term Medium 12
 rofi.color-enabled: true
 rofi.hide-scrollbar: true
 

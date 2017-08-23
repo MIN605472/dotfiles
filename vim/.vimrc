@@ -2,7 +2,7 @@
 " plugin manager {{{
 if has('unix')
   if has('nvim')
-    let s:vim_home = $HOM . '/.local/share/nvim/site'
+    let s:vim_home = $HOME . '/.local/share/nvim/site'
   else
     let s:vim_home = $HOME . '/.vim'
   endif
@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 " Plug 'chriskempson/base16-vim'
 Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'vim-airline/vim-airline'
@@ -38,6 +39,8 @@ Plug 'tpope/vim-repeat'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
+Plug 'sheerun/vim-polyglot'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 " }}}
 
@@ -58,7 +61,7 @@ autocmd FileType cmake setlocal commentstring=#\ %s
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ""
 let g:airline_right_sep = ""
-let g:airline_theme='one'
+let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 " }}}
@@ -69,8 +72,8 @@ if (has("termguicolors"))
   set termguicolors
 endif
 set t_Co=256
-colorscheme one
-set background=light
+colorscheme onedark
+set background=dark
 " }}}
 
 " general settings {{{
