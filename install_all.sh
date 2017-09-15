@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 function install_pacaur {
   mkdir pacaur_install
@@ -19,7 +19,26 @@ function install_pacaur {
 }
 
 function install_pkgs {
-  pacaur -S feh compton polybar wal vim zsh mpv lxappearance pulseaudio pavucontrol xdg-user-dirs
+  pacaur -S \
+    stow \
+    xorg-server \
+    xorg-xinit \
+    termite \
+    polybar \
+    rxvt-unicode \
+    wal-git \
+    rofi \
+    feh \
+    compton \
+    polybar \
+    wal \
+    vim \
+    zsh \
+    mpv \
+    lxappearance \
+    pulseaudio \
+    pavucontrol \
+    xdg-user-dirs
 }
 
 install_pacaur
