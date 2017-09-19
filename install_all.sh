@@ -26,7 +26,7 @@ function install_pkgs {
     termite \
     polybar \
     rxvt-unicode \
-    wal-git \
+    python-pywal \
     rofi \
     feh \
     compton \

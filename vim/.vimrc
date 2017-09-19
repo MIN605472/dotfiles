@@ -17,7 +17,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 " Plug 'chriskempson/base16-vim'
-Plug 'rakr/vim-one'
+" Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -40,7 +40,7 @@ Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 Plug 'sheerun/vim-polyglot'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 " }}}
 
@@ -61,18 +61,18 @@ autocmd FileType cmake setlocal commentstring=#\ %s
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ""
 let g:airline_right_sep = ""
-let g:airline_theme='onedark'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 " }}}
 
 " theme settings {{{
 syntax on
-if (has("termguicolors"))
-  set termguicolors
-endif
+" if (has("termguicolors"))
+"   set termguicolors
+" endif
 set t_Co=256
-colorscheme onedark
+colorscheme gruvbox
 set background=dark
 " }}}
 
