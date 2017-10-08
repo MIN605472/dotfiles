@@ -8,7 +8,6 @@ function install_pacaur {
   cd cower
   gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
   makepkg -s -i -c
-  mkap
   cd ..
   curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz
   tar xvf pacaur.tar.gz
@@ -23,26 +22,47 @@ function install_pkgs {
     stow \
     xorg-server \
     xorg-xinit \
-    termite \
+    bspwm \
+    sxhkd \
     polybar \
-    rxvt-unicode \
+    termite \
     python-pywal \
     rofi \
     feh \
+    sxiv \
+    ntfs-3g \
+    udisks2 \
     compton \
     polybar \
-    wal \
+    dunst \
     vim \
     zsh \
     mpv \
+    zathura-pdf-mupdf \
     lxappearance \
+    arc-gtk-theme \
+    arc-icon-theme \
+    gnome-themes-standard \
+    gtk-engine-murrine \
     pulseaudio \
     pavucontrol \
-    xdg-user-dirs
+    xdg-user-dirs \
+    noto-font \
+    noto-fonts-cjk \
+    noto-fonts-emoji \
+    bdf-tewi-git \
+    siji-git \
+    firefox \
+    openssh
+}
+
+function_install_oh_my_zsh {
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 install_pacaur
 install_pkgs
+install_oh_my_zsh
 for d in $(ls -d */); do
   (stow $d)
 done

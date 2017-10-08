@@ -1,4 +1,5 @@
 " vim:set fdm=marker:
+
 " plugin manager {{{
 if has('unix')
   if has('nvim')
@@ -15,14 +16,13 @@ if has('unix')
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
-" Plug 'chriskempson/base16-vim'
-" Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
+" Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'vim-airline/vim-airline'
 Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 Plug 'mhinz/vim-startify'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
@@ -33,19 +33,18 @@ Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/goyo.vim'
+Plug 'lervag/vimtex'
 " Plug 'w0rp/ale'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-repeat'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
-Plug 'sheerun/vim-polyglot'
-" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'sheerun/vim-polyglot'
 call plug#end()
 " }}}
 
 " codefmt setting {{{
-" call maktaba#plugin#Detect()
 call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt clang_format_style='google'
@@ -57,38 +56,40 @@ autocmd FileType c,cpp setlocal commentstring=//\ %s
 autocmd FileType cmake setlocal commentstring=#\ %s
 " }}}
 
+" theme settings {{{
+syntax on
+if (has("termguicolors"))
+  set termguicolors
+endif
+" set t_Co=256
+set background=dark
+colorscheme one
+" }}}
+
 " airline settings {{{
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ""
 let g:airline_right_sep = ""
-let g:airline_theme='gruvbox'
+let g:airline_theme='one'
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
-" }}}
-
-" theme settings {{{
-syntax on
-" if (has("termguicolors"))
-"   set termguicolors
-" endif
-set t_Co=256
-colorscheme gruvbox
-set background=dark
 " }}}
 
 " general settings {{{
 set nocompatible
 filetype plugin indent on
-set nonumber
-"set cursorline
-"set rnu
+" set number
+set cursorline
+" set rnu
 set expandtab
 set shiftwidth=2
-set softtabstop=4
-set tabstop=4
+set softtabstop=2
+set tabstop=2
 set incsearch
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 set ignorecase
+set smartcase
+set title
 set hlsearch
 set showmatch
 set wildignore=*.out
@@ -96,7 +97,7 @@ set wildmenu
 set encoding=utf-8
 setglobal fileencoding=utf-8
 set equalprg=par
-set mouse=a
+set mouse=h
 set noswapfile
 " }}}
 
@@ -105,9 +106,12 @@ set guioptions-=m
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
-set guifont=Inconsolata:h11
 set backspace=indent,eol,start
-set guifont=Fantasque\ Sans\ Mono\ 9
+if has('unix')
+  set guifont=Iosevka\ Term\ 9
+elseif has("win32")
+  set guifont=Iosevka\ Term:h11
+endif
 " }}}
 
 " netrw settings {{{
@@ -121,7 +125,7 @@ let g:netrw_special_syntax = 1
 " }}}
 
 " mappings {{{
-let mapleader = " "
+" let mapleader = ","
+" let maplocalleader = "\\"
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
-nnoremap <leader>m :AsyncRun make -C build && build/Game<CR>
 " }}}

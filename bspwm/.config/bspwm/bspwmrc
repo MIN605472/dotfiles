@@ -10,7 +10,7 @@ compton --config ~/.config/compton/conf &
 wal -i ~/wallpapers/wallhaven-549707.jpg
 polybar -r top &
 
-bspc monitor -d 'tasks' 'surf' 'dev' 'video' 'music' 'misc'
+bspc monitor -d 1 2 3 4 5 6
 
 bspc config border_width         2
 bspc config window_gap          12
@@ -29,9 +29,7 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a mpv state=floating
-bspc rule -a Firefox desktop='^2'
-bspc rule -a '*' follow=false
+bspc rule -a Firefox desktop='^1'
 bspc rule -a pavucontrol state=floating follow=on
-
 
 firefox &

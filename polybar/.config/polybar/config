@@ -36,10 +36,8 @@ modules-left = bspwm
 modules-center = date 
 modules-right = mail cpu memory
 
-;tray-position = right
-;tray-padding = 5
-;tray-transparent = true
-;tray-background = #0063ff
+tray-position = right
+tray-padding = 1
 
 wm-restack = bspwm
 
@@ -60,31 +58,20 @@ strip-wsnumbers = true
 index-sort = true
 enable-scroll = false
 
-ws-icon-0 = tasks;
-ws-icon-1 = surf;
-ws-icon-2 = dev;
-ws-icon-3 = video;
-ws-icon-4 = music;
-ws-icon-5 = misc;
-ws-icon-default = ♟
-
-; label-focused = %name%
-label-focused = %{B#1f1528 F#78727e T3}%{F- T4 F#c01f74 B#78727e}%{o#c01f74}%icon%%{B#1f1528 F#78727e T3}%{F- B- T- -o}
+label-focused = %name%
 label-focused-background = ${colors.bg-alt}
-label-focused-margin = 1
+label-focused-padding = 1
+label-focused-overline =  ${colors.primary}
 
-label-occupied = %icon%
-label-occupied-margin = 1
-label-occupied-font = 4
+label-occupied = %name%
+label-occupied-padding = 1
 label-occupied-foreground = ${colors.fg}
 
-label-urgent = %icon%
-label-urgent-margin = 1
-label-urgent-font = 4
+label-urgent = %name%
+label-urgent-padding = 1
 
-label-empty = %icon%
-label-empty-margin = 1
-label-empty-font = 4
+label-empty = %name%
+label-empty-padding = 1
 label-empty-foreground = ${colors.secondary}
 
 [module/date]
@@ -95,23 +82,17 @@ time = %H:%M
 
 label = %{F#c01f74}%date%%{F-} %time%
 
-[module/mail]
-type = custom/text
-content =  0
-content-foreground = ${colors.primary}
-
-
 [module/memory]
 type = internal/memory
 format-prefix = " "
 format-prefix-foreground = ${colors.primary}
-label = "%percentage_used%"
+label = "%percentage_used:2%"
 
 [module/cpu]
 type = internal/cpu
 interval = 0.5
 format-prefix = " "
 format-prefix-foreground = ${colors.primary}
-label = "%percentage%" 
+label = "%percentage:2%" 
 
 ; vim:ft=dosini

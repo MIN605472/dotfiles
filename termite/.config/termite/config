@@ -1,3 +1,5 @@
 [options]
-#allow_bold = false
 font = lucy tewi 11px
+allow_bold = false
+cursor_shape = block
+mouse_autohide = true
