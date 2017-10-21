@@ -35,7 +35,7 @@ function install_pkgs {
     compton \
     polybar \
     dunst \
-    vim \
+    gvim \
     zsh \
     mpv \
     zathura-pdf-mupdf \
@@ -47,22 +47,24 @@ function install_pkgs {
     pulseaudio \
     pavucontrol \
     xdg-user-dirs \
-    noto-font \
+    noto-fonts \
     noto-fonts-cjk \
     noto-fonts-emoji \
     bdf-tewi-git \
     siji-git \
     firefox \
-    openssh
+    openssh \
+    mesa-vdpau \
+    libva-vdpau-driver
 }
 
-function_install_oh_my_zsh {
+function install_oh_my_zsh {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 install_pacaur
 install_pkgs
-install_oh_my_zsh
 for d in $(ls -d */); do
   (stow $d)
 done
+install_oh_my_zsh

@@ -16,31 +16,20 @@ if has('unix')
 endif
 
 call plug#begin('~/.vim/plugged')
-" Plug 'morhetz/gruvbox'
-Plug 'rakr/vim-one'
-
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim'
 Plug 'mhinz/vim-startify'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'junegunn/gv.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'junegunn/goyo.vim'
-Plug 'lervag/vimtex'
-" Plug 'w0rp/ale'
-" Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-repeat'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
-" Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
+Plug 'elixir-lang/vim-elixir'
 call plug#end()
 " }}}
 
@@ -56,30 +45,31 @@ autocmd FileType c,cpp setlocal commentstring=//\ %s
 autocmd FileType cmake setlocal commentstring=#\ %s
 " }}}
 
+" airline settings {{{
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ""
+let g:airline_right_sep = ""
+let g:airline_theme='gruvbox'
+" let g:airline#extensions#tabline#enabled = 1
+set laststatus=2
+" }}}
+
 " theme settings {{{
 syntax on
 if (has("termguicolors"))
   set termguicolors
 endif
-" set t_Co=256
+set t_Co=256
 set background=dark
-colorscheme one
-" }}}
-
-" airline settings {{{
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ""
-let g:airline_right_sep = ""
-let g:airline_theme='one'
-let g:airline#extensions#tabline#enabled = 1
-set laststatus=2
+colorscheme gruvbox
 " }}}
 
 " general settings {{{
 set nocompatible
 filetype plugin indent on
 " set number
-set cursorline
+" set cursorline
+set colorcolumn=80
 " set rnu
 set expandtab
 set shiftwidth=2
@@ -125,7 +115,11 @@ let g:netrw_special_syntax = 1
 " }}}
 
 " mappings {{{
-" let mapleader = ","
-" let maplocalleader = "\\"
+let mapleader = ","
+let maplocalleader = "\\"
+
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>a :Ag<space>
 " }}}
