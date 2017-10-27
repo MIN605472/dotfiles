@@ -7,7 +7,7 @@ xset +fp /usr/share/fonts/envypn
 xset fp rehash &
 # setxkbmap es &
 compton --config ~/.config/compton/conf &
-wal -i ~/wallpapers/wallhaven-549707.jpg
+# wal -i ~/wallpapers/wallhaven-549707.jpg
 polybar -r top &
 xmodmap ~/.xmodmap &
 
