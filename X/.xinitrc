@@ -23,4 +23,4 @@ if [ -f "$usermodmap" ]; then
  xmodmap "$usermodmap"
 fi
 
-exec i3
+exec bspwm

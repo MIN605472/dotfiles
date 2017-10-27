@@ -1,5 +1,5 @@
 [options]
-font = Hack 8
+font = DejaVu Sans Mono 9
 allow_bold = false
 cursor_shape = underline
 mouse_autohide = true

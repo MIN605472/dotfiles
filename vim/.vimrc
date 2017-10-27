@@ -30,6 +30,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'elixir-lang/vim-elixir'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 " }}}
 
@@ -69,7 +70,7 @@ set nocompatible
 filetype plugin indent on
 " set number
 " set cursorline
-set colorcolumn=80
+" set colorcolumn=80
 " set rnu
 set expandtab
 set shiftwidth=2
@@ -89,6 +90,7 @@ setglobal fileencoding=utf-8
 set equalprg=par
 set mouse=h
 set noswapfile
+set hidden
 " }}}
 
 " gui settings {{{
@@ -112,6 +114,10 @@ let g:netrw_liststyle = 3
 let g:netrw_retmap = 1
 let g:netrw_silent = 1
 let g:netrw_special_syntax = 1
+" }}}
+
+" gutentags settings {{{
+let g:gutentags_cache_dir = '~/.tags'
 " }}}
 
 " mappings {{{

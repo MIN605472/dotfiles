@@ -9,6 +9,7 @@ xset fp rehash &
 compton --config ~/.config/compton/conf &
 wal -i ~/wallpapers/wallhaven-549707.jpg
 polybar -r top &
+xmodmap ~/.xmodmap &
 
 bspc monitor -d 1 2 3 4 5 6
 
