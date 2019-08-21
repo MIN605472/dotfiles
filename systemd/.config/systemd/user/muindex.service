@@ -1,0 +1,10 @@
+[Unit]
+Description=Mailbox indexing service
+After=mbsync.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mu index
+
+[Install]
+WantedBy=mbsync.service
