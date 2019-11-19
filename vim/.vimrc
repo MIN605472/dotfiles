@@ -16,7 +16,8 @@ if has('unix')
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
+Plug 'MIN605472/vim-one'
+Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
@@ -30,7 +31,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'elixir-lang/vim-elixir'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 " }}}
 
@@ -39,6 +41,17 @@ call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt clang_format_style='google'
 Glaive codefmt clang_format_executable='clang-format'
+
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  " autocmd FileType python AutoFormatBuffer yapf
+augroup END
 " }}}
 
 " commentary settings {{{
@@ -48,9 +61,11 @@ autocmd FileType cmake setlocal commentstring=#\ %s
 
 " airline settings {{{
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ""
-let g:airline_right_sep = ""
-let g:airline_theme='gruvbox'
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+let g:airline_theme='one'
 " let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 " }}}
@@ -62,7 +77,9 @@ if (has("termguicolors"))
 endif
 set t_Co=256
 set background=dark
-colorscheme gruvbox
+colorscheme one
+set t_8b=[48;2;%lu;%lu;%lum
+set t_8f=[38;2;%lu;%lu;%lum
 " }}}
 
 " general settings {{{
@@ -91,6 +108,7 @@ set equalprg=par
 set mouse=h
 set noswapfile
 set hidden
+set cursorline
 " }}}
 
 " gui settings {{{
@@ -121,11 +139,12 @@ let g:gutentags_cache_dir = '~/.tags'
 " }}}
 
 " mappings {{{
-let mapleader = ","
+let mapleader = " "
 let maplocalleader = "\\"
 
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>a :Ag<space>
+" let &t_ut=''
 " }}}
