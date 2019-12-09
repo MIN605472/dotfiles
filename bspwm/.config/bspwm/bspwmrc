@@ -1,14 +1,14 @@
 #! /bin/sh
 
 sxhkd &
-nm-applet &
-xset +fp /usr/share/fonts/misc
-xset +fp /usr/share/fonts/envypn
-xset fp rehash &
+# nm-applet &
+# xset +fp /usr/share/fonts/misc
+# xset +fp /usr/share/fonts/envypn
+# xset fp rehash &
 # setxkbmap es &
-compton --config ~/.config/compton/conf &
+# compton --config ~/.config/compton/conf &
 # wal -i ~/wallpapers/wallhaven-549707.jpg
-polybar -r top &
+# polybar -r top &
 xmodmap ~/.xmodmap &
 
 bspc monitor -d 1 2 3 4 5 6

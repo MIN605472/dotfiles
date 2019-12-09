@@ -1,9 +1,9 @@
-URxvt.letterSpace: -1
+! URxvt.letterSpace: -1
 ! URxvt.internalBorder: 10
 ! URxvt.font: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1
 ! URxvt.boldFont: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1
-URxvt.font: xft:Iosevka:size=11:style=medium
-URxvt.boldFont: xft:Iosevka:size=11:style=bold
+URxvt.font: xft:Iosevka:size=9:style=medium
+URxvt.boldFont: xft:Iosevka:size=9:style=bold
 URxvt.scrollBar: false
 URxvt.perl-ext-common: default,matcher,selection-to-clipboard
 URxvt.url-launcher: /usr/bin/xdg-open
@@ -15,6 +15,11 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.iso14755: false
 URxvt.iso14755_52: false
+
+xterm*saveLines: 2000
+xterm*foreground: white
+xterm*background: black
+xterm*cursorColor: rgb:80/00/00
 
 rofi.font: Iosevka 11
 rofi.color-enabled: true
