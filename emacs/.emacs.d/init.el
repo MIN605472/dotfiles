@@ -8,9 +8,18 @@
   (write-region "" nil custom-file))
 (load custom-file)
 (setq-default  indent-tabs-mode nil
-	       tab-width 2
-	       css-indent-offset 2)
+               tab-width 2
+               css-indent-offset 2)
 (delete-selection-mode 1)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; gdb
+(setq gdb-many-windows t
+      gdb-show-main t)
+
+(setq sentence-end-double-space nil)
+(subword-mode)
 
 ;; Packages
 (require 'package)
@@ -40,22 +49,21 @@
 
 ;; (set-face-attribute 'default nil
 ;; 		    :font "Iosevka"
-;; 		    :height 95
-;; 		    :weight 'medium)
-;; (set-frame-font "Iosevka 10" nil t)
+;; 		    :height 120
+;; 		    :weight 'normal)
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka 10"))
+             '(font . "Iosevka 9"))
 
-(use-package all-the-icons)
+;; (use-package all-the-icons)
 
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
 (use-package doom-themes
   :config
-  (load-theme 'doom-one-light t))
+  (load-theme 'doom-solarized-light t))
 
-;; (use-package doom-modeline
-;;   :defer t
-;;   :hook (after-init . doom-modeline-init))
+(use-package doom-modeline
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 ;; (use-package auto-package-update
 ;;   :config
@@ -90,7 +98,7 @@
   (setq nov-text-width 80)
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   (defun my-nov-font-setup ()
-    (face-remap-add-relative 'variable-pitch :family "Libre Baskerville"
+    (face-remap-add-relative 'variable-pitch :family "ETBembo"
                              :height 1.1))
   (add-hook 'nov-mode-hook 'my-nov-font-setup))
 
@@ -167,27 +175,36 @@
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda))
+  :hook (org-mode . visual-line-mode)
   :config
   (add-to-list 'org-modules 'org-drill)
   (add-to-list 'org-latex-packages-alist '("" "bm" t))
   (add-to-list 'org-latex-packages-alist '("" "listings" t))
   (add-to-list 'org-latex-packages-alist '("" "clrscode3e" t))
   (add-to-list 'org-latex-packages-alist '("" "tikz" t))
+  (add-to-list 'org-latex-packages-alist '("" "pgf" t))
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '(
+   '((latex . t)
      (python . t)
      (shell . t)))
+  
+  ;; fix color handling in org-preview-latex-fragment
+  (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
+    (plist-put dvipng--plist :use-xcolor t)
+    (plist-put dvipng--plist :image-converter '("dvipng -D %D -T tight -o %O %f")))
+  
   (setq org-default-notes-file "~/Dropbox/org/refile.org"
+        org-drill-add-random-noise-to-intervals-p t
         org-startup-indented t
         org-confirm-babel-evaluate nil
         org-hide-leading-stars t
         org-latex-prefer-user-labels t
-        ;; org-bullets-bullet-list '(" ")
-        ;; org-ellipsis "  "
+        org-bullets-bullet-list '("#")
+        org-ellipsis "⤵"
         ;; org-pretty-entities t
         org-hide-emphasis-markers t
-        ;; org-agenda-block-separator ""
+        org-agenda-block-separator ""
         org-fontify-whole-heading-line t
         org-fontify-done-headline t
         org-fontify-quote-and-verse-blocks t
@@ -205,13 +222,15 @@
                              ("~/gtd/someday.org" :level . 1)
                              ("~/gtd/tickler.org" :maxlevel . 2))))
 
-;; (use-package org-bullets
-;;   :config
-;;   (org-bullets-mode))
+(use-package org-bullets
+  :config
+  (org-bullets-mode))
 
 (use-package org-ref
   :config
   (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f")))
+
+(use-package org-drill)
 
 (use-package olivetti)
 ;; (use-package poet-theme)
@@ -241,3 +260,16 @@
 (use-package yaml-mode)
 (use-package org-pomodoro)
 (use-package org-super-agenda)
+
+;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+        ;; This would override `fill-column' if it's an integer.
+        (emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
+
+(define-key global-map "\M-Q" 'unfill-paragraph)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
+(use-package jsx-mode)
