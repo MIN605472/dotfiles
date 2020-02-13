@@ -47,12 +47,12 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-;; (set-face-attribute 'default nil
-;; 		    :font "Iosevka"
-;; 		    :height 120
-;; 		    :weight 'normal)
-(add-to-list 'default-frame-alist
-             '(font . "Iosevka 9"))
+(set-face-attribute 'default nil
+		    :font "Iosevka"
+		    :height 90
+		    :weight 'medium)
+;; (add-to-list 'default-frame-alist
+;;              '(font . "Fira Code Medium 9"))
 
 ;; (use-package all-the-icons)
 
@@ -124,9 +124,9 @@
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 
-;; (use-package pdf-tools
-;;   :config
-;;   (pdf-tools-install))
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
 
 (use-package projectile
   :config
@@ -273,3 +273,13 @@
 (define-key global-map "\M-Q" 'unfill-paragraph)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
 (use-package jsx-mode)
+(use-package scala-mode)
+
+
+(setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+      org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
+      org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
