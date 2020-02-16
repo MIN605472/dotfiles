@@ -51,15 +51,10 @@
 		    :font "Iosevka"
 		    :height 90
 		    :weight 'medium)
-;; (add-to-list 'default-frame-alist
-;;              '(font . "Fira Code Medium 9"))
+(add-to-list 'default-frame-alist
+             '(font . "Iosevka Medium 9"))
 
 ;; (use-package all-the-icons)
-
-;; Other themes: kaolin-themes, ample-theme, doom-themes
-(use-package doom-themes
-  :config
-  (load-theme 'doom-solarized-light t))
 
 (use-package doom-modeline
   :defer t
@@ -124,9 +119,9 @@
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 
-(use-package pdf-tools
-  :config
-  (pdf-tools-install))
+; (use-package pdf-tools
+;   :config
+;   (pdf-tools-install))
 
 (use-package projectile
   :config
@@ -188,7 +183,7 @@
    '((latex . t)
      (python . t)
      (shell . t)))
-  
+  (setq org-image-actual-width nil)
   ;; fix color handling in org-preview-latex-fragment
   (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
     (plist-put dvipng--plist :use-xcolor t)
@@ -204,6 +199,7 @@
         org-ellipsis "⤵"
         ;; org-pretty-entities t
         org-hide-emphasis-markers t
+        org-agenda-files '("~/Dropbox/org/")
         org-agenda-block-separator ""
         org-fontify-whole-heading-line t
         org-fontify-done-headline t
@@ -281,5 +277,53 @@
 ;; see org-ref for use of these variables
 (setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
-      org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
+      org-ref-pdf-directory "~/Dropbox/bibliography/bibtex_pdfs/")
 (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+(use-package interleave)
+
+(use-package deft
+  ;; :bind ("C-c d" . deft)
+  ;; :commands (deft)
+  :custom
+  (deft-directory "~/Dropbox/org")
+  (deft-recursive t)
+  (deft-extensions '("org" "md" "txt")))
+
+(use-package zetteldeft
+  :after deft
+  :bind (("C-c d n" . zetteldeft-new-file)
+         ("C-c d N" . zetteldeft-new-file-and-link)
+         ("C-c d i" . zetteldeft-find-file-id-insert)
+         ("C-c d d" . 'deft)
+         ("C-c d D" . 'zetteldeft-deft-new-search)
+         ("C-c d R" . 'deft-refresh)
+         ("C-c d s" . 'zetteldeft-search-at-point)
+         ("C-c d c" . 'zetteldeft-search-current-id)
+         ("C-c d f" . 'zetteldeft-follow-link)
+         ("C-c d F" . 'zetteldeft-avy-file-search-ace-window)
+         ("C-c d l" . 'zetteldeft-avy-link-search)
+         ("C-c d t" . 'zetteldeft-avy-tag-search)
+         ("C-c d T" . 'zetteldeft-tag-buffer)
+         ("C-c d i" . 'zetteldeft-find-file-id-insert)
+         ("C-c d I" . 'zetteldeft-find-file-full-title-insert)
+         ("C-c d o" . 'zetteldeft-find-file)
+         ("C-c d n" . 'zetteldeft-new-file)
+         ("C-c d N" . 'zetteldeft-new-file-and-link)
+         ("C-c d r" . 'zetteldeft-file-rename)
+         ("C-c d x" . 'zetteldeft-count-words)))
+
+;; Other themes: kaolin-themes, ample-theme, doom-themes
+(use-package doom-themes
+  :config
+  ;; (load-theme 'doom-solarized-light t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config)
+  ;; fix theme when frame created by emacsclient
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (select-frame frame)
+              (load-theme 'doom-solarized-light t))))
+
+
+(use-package org-download)
