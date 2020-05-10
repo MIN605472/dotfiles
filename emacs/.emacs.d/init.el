@@ -47,12 +47,12 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-(set-face-attribute 'default nil
-		    :font "Iosevka"
-		    :height 90
-		    :weight 'medium)
+;; (set-face-attribute 'default nil
+;; 		    :font "DejaVu Sans Mono"
+;; 		    :height 100
+;; 		    :weight 'medium)
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Medium 9"))
+             '(font . "Iosevka Medium 10"))
 
 ;; (use-package all-the-icons)
 
@@ -107,6 +107,7 @@
 ;;   :config
 ;;   (evil-mode 1))
 
+(require 'mu4e)
 (use-package mu4e-contrib
   :ensure nil
   :custom
@@ -119,9 +120,9 @@
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 
-; (use-package pdf-tools
-;   :config
-;   (pdf-tools-install))
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
 
 (use-package projectile
   :config
@@ -170,7 +171,10 @@
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda))
-  :hook (org-mode . visual-line-mode)
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . flyspell-mode)
+         (org-mode . org-bullets-mode)
+         (org-mode . (lambda () (org-latex-preview '(16)))))
   :config
   (add-to-list 'org-modules 'org-drill)
   (add-to-list 'org-latex-packages-alist '("" "bm" t))
@@ -196,7 +200,7 @@
         org-hide-leading-stars t
         org-latex-prefer-user-labels t
         org-bullets-bullet-list '("#")
-        org-ellipsis "⤵"
+        ;; org-ellipsis "⤵"
         ;; org-pretty-entities t
         org-hide-emphasis-markers t
         org-agenda-files '("~/Dropbox/org/")
@@ -226,7 +230,9 @@
   :config
   (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f")))
 
-(use-package org-drill)
+(use-package org-drill
+  :config
+  (setq org-drill-scope 'directory))
 
 (use-package olivetti)
 ;; (use-package poet-theme)
@@ -279,7 +285,7 @@
       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
       org-ref-pdf-directory "~/Dropbox/bibliography/bibtex_pdfs/")
 (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
-(use-package interleave)
+
 
 (use-package deft
   ;; :bind ("C-c d" . deft)
@@ -290,27 +296,41 @@
   (deft-extensions '("org" "md" "txt")))
 
 (use-package zetteldeft
-  :after deft
-  :bind (("C-c d n" . zetteldeft-new-file)
-         ("C-c d N" . zetteldeft-new-file-and-link)
-         ("C-c d i" . zetteldeft-find-file-id-insert)
-         ("C-c d d" . 'deft)
-         ("C-c d D" . 'zetteldeft-deft-new-search)
-         ("C-c d R" . 'deft-refresh)
-         ("C-c d s" . 'zetteldeft-search-at-point)
-         ("C-c d c" . 'zetteldeft-search-current-id)
-         ("C-c d f" . 'zetteldeft-follow-link)
-         ("C-c d F" . 'zetteldeft-avy-file-search-ace-window)
-         ("C-c d l" . 'zetteldeft-avy-link-search)
-         ("C-c d t" . 'zetteldeft-avy-tag-search)
-         ("C-c d T" . 'zetteldeft-tag-buffer)
-         ("C-c d i" . 'zetteldeft-find-file-id-insert)
-         ("C-c d I" . 'zetteldeft-find-file-full-title-insert)
-         ("C-c d o" . 'zetteldeft-find-file)
-         ("C-c d n" . 'zetteldeft-new-file)
-         ("C-c d N" . 'zetteldeft-new-file-and-link)
-         ("C-c d r" . 'zetteldeft-file-rename)
-         ("C-c d x" . 'zetteldeft-count-words)))
+  :after deft)
+  ;; :bind (("C-c d n" . zetteldeft-new-file)
+  ;;        ("C-c d N" . zetteldeft-new-file-and-link)
+  ;;        ("C-c d i" . zetteldeft-find-file-id-insert)
+  ;;        ("C-c d d" . 'deft)
+  ;;        ("C-c d D" . 'zetteldeft-deft-new-search)
+  ;;        ("C-c d R" . 'deft-refresh)
+  ;;        ("C-c d s" . 'zetteldeft-search-at-point)
+  ;;        ("C-c d c" . 'zetteldeft-search-current-id)
+  ;;        ("C-c d f" . 'zetteldeft-follow-link)
+  ;;        ("C-c d F" . 'zetteldeft-avy-file-search-ace-window)
+  ;;        ("C-c d l" . 'zetteldeft-avy-link-search)
+  ;;        ("C-c d t" . 'zetteldeft-avy-tag-search)
+  ;;        ("C-c d T" . 'zetteldeft-tag-buffer)
+  ;;        ("C-c d i" . 'zetteldeft-find-file-id-insert)
+  ;;        ("C-c d I" . 'zetteldeft-find-file-full-title-insert)
+  ;;        ("C-c d o" . 'zetteldeft-find-file)
+  ;;        ("C-c d n" . 'zetteldeft-new-file)
+  ;;        ("C-c d N" . 'zetteldeft-new-file-and-link)
+  ;;        ("C-c d r" . 'zetteldeft-file-rename)
+  ;;        ("C-c d x" . 'zetteldeft-count-words)))
+
+(use-package org-roam
+  :hook 
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/org")
+  :bind (:map org-roam-mode-map
+              (("C-c d l" . org-roam)
+               ("C-c d d" . 'deft)
+               ("C-c d f" . org-roam-find-file)
+               ("C-c d g" . org-roam-show-graph))
+              :map org-mode-map
+              (("C-c d i" . org-roam-insert))))
+
 
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
 (use-package doom-themes
@@ -323,7 +343,25 @@
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (select-frame frame)
-              (load-theme 'doom-solarized-light t))))
+              (load-theme 'doom-one t))))
 
 
 (use-package org-download)
+
+;; (defvar bootstrap-version)
+;; (let ((bootstrap-file
+;;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+;;       (bootstrap-version 5))
+;;   (unless (file-exists-p bootstrap-file)
+;;     (with-current-buffer
+;;         (url-retrieve-synchronously
+;;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+;;          'silent 'inhibit-cookies)
+;;       (goto-char (point-max))
+;;       (eval-print-last-sexp)))
+;;   (load bootstrap-file nil 'nomessage))
+
+(use-package hyperbole)
+;; (use-package interleave)
+(use-package org-noter)
+
