@@ -47,18 +47,18 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-;; (set-face-attribute 'default nil
-;; 		    :font "DejaVu Sans Mono"
-;; 		    :height 100
-;; 		    :weight 'medium)
+(set-face-attribute 'default nil
+		    :font "Hack"
+		    :height 100
+		    :weight 'medium)
 (add-to-list 'default-frame-alist
              '(font . "Iosevka Medium 10"))
 
 ;; (use-package all-the-icons)
 
-(use-package doom-modeline
-  :defer t
-  :hook (after-init . doom-modeline-init))
+;; (use-package doom-modeline
+;;   :defer t
+;;   :hook (after-init . doom-modeline-init))
 
 ;; (use-package auto-package-update
 ;;   :config
@@ -173,7 +173,9 @@
          ("C-c a" . org-agenda))
   :hook ((org-mode . visual-line-mode)
          (org-mode . flyspell-mode)
-         (org-mode . org-bullets-mode)
+         ;; (org-mode . org-bullets-mode)
+         (org-mode . olivetti-mode)
+         (org-mode . org-indent-mode)
          (org-mode . (lambda () (org-latex-preview '(16)))))
   :config
   (add-to-list 'org-modules 'org-drill)
@@ -203,10 +205,13 @@
         ;; org-ellipsis "⤵"
         ;; org-pretty-entities t
         org-hide-emphasis-markers t
-        org-agenda-files '("~/Dropbox/org/")
+        org-agenda-start-on-weekday 1
+        calendar-week-start-day 1
+        ;; org-agenda-files '("~/Dropbox/org/")
         org-agenda-block-separator ""
         org-fontify-whole-heading-line t
         org-fontify-done-headline t
+        org-startup-folded nil
         org-fontify-quote-and-verse-blocks t
         org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                             (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))
@@ -222,9 +227,7 @@
                              ("~/gtd/someday.org" :level . 1)
                              ("~/gtd/tickler.org" :maxlevel . 2))))
 
-(use-package org-bullets
-  :config
-  (org-bullets-mode))
+(use-package org-bullets)
 
 (use-package org-ref
   :config
@@ -232,9 +235,12 @@
 
 (use-package org-drill
   :config
-  (setq org-drill-scope 'directory))
+  (setq org-drill-scope 'file))
 
-(use-package olivetti)
+(use-package olivetti
+  :custom
+  (olivetti-body-width 100))
+
 ;; (use-package poet-theme)
 (use-package auctex
   :defer t
@@ -329,7 +335,8 @@
                ("C-c d f" . org-roam-find-file)
                ("C-c d g" . org-roam-show-graph))
               :map org-mode-map
-              (("C-c d i" . org-roam-insert))))
+              (("C-c d i" . org-roam-insert)
+               ("C-c d s" . org-roam-store-link))))
 
 
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
@@ -363,5 +370,6 @@
 
 (use-package hyperbole)
 ;; (use-package interleave)
-(use-package org-noter)
-
+(use-package org-noter
+  :bind (("C-c n p" . org-noter-insert-precise-note)
+         ("C-c n i" . org-noter-insert-note)))
