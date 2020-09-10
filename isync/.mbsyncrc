@@ -1,0 +1,22 @@
+IMAPAccount gmailPro
+Host imap.gmail.com
+User [GMAIL ACCOUNT GOES HERE]
+Passcmd "secret-tool lookup domain gmailPro"
+SSLType IMAPS
+AuthMechs LOGIN
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmailPro-remote
+Account gmailPro
+
+MaildirStore gmailPro-local
+Subfolders Verbatim
+Path ~/Maildir/gmailPro/
+Inbox ~/Maildir/gmailPro/Inbox
+
+Channel gmailPro
+Master :gmailPro-remote:
+Slave :gmailPro-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Create Both
+SyncState *

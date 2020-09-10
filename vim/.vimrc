@@ -33,7 +33,24 @@ Plug 'mileszs/ack.vim'
 Plug 'elixir-lang/vim-elixir'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'dart-lang/dart-vim-plugin'
+Plug 'vim/killersheep'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+" }}}
+
+" coc {{{
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
 
 " codefmt setting {{{
@@ -42,16 +59,16 @@ Glaive codefmt plugin[mappings]
 Glaive codefmt clang_format_style='google'
 Glaive codefmt clang_format_executable='clang-format'
 
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  " autocmd FileType python AutoFormatBuffer yapf
-augroup END
+" augroup autoformat_settings
+"   autocmd FileType bzl AutoFormatBuffer buildifier
+"   autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+"   autocmd FileType dart AutoFormatBuffer dartfmt
+"   autocmd FileType go AutoFormatBuffer gofmt
+"   autocmd FileType gn AutoFormatBuffer gn
+"   autocmd FileType html,css,json AutoFormatBuffer js-beautify
+"   autocmd FileType java AutoFormatBuffer google-java-format
+"   autocmd FileType python AutoFormatBuffer yapf
+" augroup END
 " }}}
 
 " commentary settings {{{

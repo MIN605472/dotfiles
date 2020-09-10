@@ -163,6 +163,7 @@ exec --no-startup-id dropbox
 
 bindsym $mod+grave workspace back_and_forth
 bindsym $mod+q exec ~/.config/i3/mouse_sens.sh
+bindsym --whole-window button8 exec ~/.config/i3/mouse_sens.sh
 
 bindsym Mod1+Tab exec rofi -show window
 
@@ -174,6 +175,7 @@ gaps inner 20
 gaps outer 5
 # for_window [class="jetbrains-idea"] focus
 for_window [class=".*"] border pixel 3
+bindsym $mod+z sticky toggle
 
 # colors
 # set_from_resource $bg i3wm.color0

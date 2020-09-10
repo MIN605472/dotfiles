@@ -52,13 +52,13 @@
 		    :height 100
 		    :weight 'medium)
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Medium 10"))
+             '(font . "Iosevka Medium 9"))
 
 ;; (use-package all-the-icons)
 
-;; (use-package doom-modeline
-;;   :defer t
-;;   :hook (after-init . doom-modeline-init))
+(use-package doom-modeline
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 ;; (use-package auto-package-update
 ;;   :config
@@ -170,7 +170,8 @@
   :pin org
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda))
+         ("C-c a" . org-agenda)
+         ("C-c l" . org-store-link))
   :hook ((org-mode . visual-line-mode)
          (org-mode . flyspell-mode)
          ;; (org-mode . org-bullets-mode)
@@ -184,6 +185,8 @@
   (add-to-list 'org-latex-packages-alist '("" "clrscode3e" t))
   (add-to-list 'org-latex-packages-alist '("" "tikz" t))
   (add-to-list 'org-latex-packages-alist '("" "pgf" t))
+  (add-to-list 'org-latex-packages-alist '("" "blkarray" t))
+  (add-to-list 'org-latex-packages-alist '("" "bbm" t))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((latex . t)
@@ -201,6 +204,7 @@
         org-confirm-babel-evaluate nil
         org-hide-leading-stars t
         org-latex-prefer-user-labels t
+        org-id-link-to-org-use-id t
         org-bullets-bullet-list '("#")
         ;; org-ellipsis "⤵"
         ;; org-pretty-entities t
@@ -335,8 +339,7 @@
                ("C-c d f" . org-roam-find-file)
                ("C-c d g" . org-roam-show-graph))
               :map org-mode-map
-              (("C-c d i" . org-roam-insert)
-               ("C-c d s" . org-roam-store-link))))
+              (("C-c d i" . org-roam-insert))))
 
 
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
@@ -351,6 +354,8 @@
             (lambda (frame)
               (select-frame frame)
               (load-theme 'doom-one t))))
+(use-package modus-operandi-theme)
+(use-package modus-vivendi-theme) 
 
 
 (use-package org-download)
