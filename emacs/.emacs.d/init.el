@@ -49,10 +49,10 @@
 
 (set-face-attribute 'default nil
 		    :font "Hack"
-		    :height 100
-		    :weight 'medium)
+		    :height 110
+        :weight 'regular)
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Medium 9"))
+             '(font . "Iosevka Medium 11"))
 
 ;; (use-package all-the-icons)
 
@@ -72,13 +72,14 @@
 
 (use-package swiper)
 (use-package ivy
+  :bind (("C-x r a" . 'counsel-register)
+         ("C-c j" . 'counsel-git-grep)
+         ("C-c k" . 'counsel-ag))
   :config
   (ivy-mode 1)
   (counsel-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "[%d/%d] ")
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c k") 'counsel-ag))
+  (setq ivy-count-format "[%d/%d] "))
 
 (use-package undo-tree
   :config
@@ -93,7 +94,7 @@
   (setq nov-text-width 80)
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   (defun my-nov-font-setup ()
-    (face-remap-add-relative 'variable-pitch :family "ETBembo"
+    (face-remap-add-relative 'variable-pitch :family "Bembo Std"
                              :height 1.1))
   (add-hook 'nov-mode-hook 'my-nov-font-setup))
 
@@ -165,19 +166,56 @@
   :config
   (global-set-key (kbd "M-o") 'ace-window))
 
+
+
+
+(defun mine-counsel-org-goto-all ()
+  (interactive)
+  (dolist (file (directory-files-recursively org-roam-directory ".*\.org$"))
+    (find-file-noselect file))  
+  (let (entries)
+    (dolist (b (buffer-list))
+      (with-current-buffer b
+        (when (derived-mode-p 'org-mode)
+          (setq entries
+                (nconc entries
+                       (counsel-outline-candidates
+                        '(:outline-title counsel-outline-title-org )
+                        ))))))
+    (ivy-read "Goto: " entries
+              :history 'counsel-org-link-history
+              :action #'counsel-org-link-action2
+              :caller 'mine-counsel-org-goto-all)))
+
+(defun counsel-org-link-action2 (x)
+  (let ((id (with-current-buffer (marker-buffer (cdr x))
+              ;; (org-goto-marker-or-bmk (cdr x))
+              (goto-char (cdr x))
+              (org-id-get-create))))
+    (org-insert-link nil (concat "id:" id) (car x))))
+
+(set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
 (use-package org
   :ensure org-plus-contrib
   :pin org
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
-         ("C-c l" . org-store-link))
+         ("C-c l s" . org-store-link)
+         ("C-c l l h" . counsel-org-link)
+         ("C-c l l H" .  mine-counsel-org-goto-all))
   :hook ((org-mode . visual-line-mode)
          (org-mode . flyspell-mode)
-         ;; (org-mode . org-bullets-mode)
+         (org-mode . org-bullets-mode)
          (org-mode . olivetti-mode)
          (org-mode . org-indent-mode)
-         (org-mode . (lambda () (org-latex-preview '(16)))))
+         (org-mode . (lambda ()
+                       (setq org-preview-latex-image-directory "~/Pictures/ltximg/")
+                       (org-latex-preview '(16))))
+         ;; (org-mode . (lambda ()
+         ;;               (texfrag-mode)
+         ;;               (texfrag-document)))
+         )
   :config
   (add-to-list 'org-modules 'org-drill)
   (add-to-list 'org-latex-packages-alist '("" "bm" t))
@@ -353,7 +391,7 @@
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (select-frame frame)
-              (load-theme 'doom-one t))))
+              (load-theme 'doom-one-light t))))
 (use-package modus-operandi-theme)
 (use-package modus-vivendi-theme) 
 
@@ -378,3 +416,22 @@
 (use-package org-noter
   :bind (("C-c n p" . org-noter-insert-precise-note)
          ("C-c n i" . org-noter-insert-note)))
+(use-package vue-mode)
+(use-package texfrag
+  :custom
+  (texfrag-subdir (file-name-as-directory (concat temporary-file-directory (make-temp-name "texfrag"))))
+  (texfrag-header-default
+"\\documentclass{article}
+\\usepackage{amsmath,amsfonts}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage{bm}
+\\usepackage{listings}
+\\usepackage{clrscode3e}
+\\usepackage{tikz}
+\\usepackage{pgf}
+\\usepackage{blkarray}
+\\usepackage{bbm}")
+  :config
+  (texfrag-global-mode)
+  )
