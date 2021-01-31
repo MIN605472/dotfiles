@@ -179,9 +179,11 @@
         (when (derived-mode-p 'org-mode)
           (setq entries
                 (nconc entries
-                       (counsel-outline-candidates
-                        '(:outline-title counsel-outline-title-org )
-                        ))))))
+                       (counsel-outline-candidates 
+                        '(:outline-title counsel-outline-title-org :display-style 'title)
+                        )
+                       
+                       )))))
     (ivy-read "Goto: " entries
               :history 'counsel-org-link-history
               :action #'counsel-org-link-action2
@@ -194,7 +196,20 @@
               (org-id-get-create))))
     (org-insert-link nil (concat "id:" id) (car x))))
 
-(set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
+(defun counsel-org-link-local ()
+  "Insert a link to an headline with completion."
+  (interactive)
+  (ivy-read "Link: " (counsel-outline-candidates
+                      '(:outline-title counsel-outline-title-org :display-style 'title))
+            :action #'counsel-org-link-action
+            :history 'counsel-org-link-history
+            :caller 'counsel-org-link))
+
+;; (set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
+(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 110)
+;; (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
+(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 130)
 (use-package org
   :ensure org-plus-contrib
   :pin org
@@ -202,13 +217,16 @@
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c l s" . org-store-link)
-         ("C-c l l h" . counsel-org-link)
+         ("C-c l l h" . counsel-org-link-local)
          ("C-c l l H" .  mine-counsel-org-goto-all))
   :hook ((org-mode . visual-line-mode)
          (org-mode . flyspell-mode)
          (org-mode . org-bullets-mode)
-         (org-mode . olivetti-mode)
-         (org-mode . org-indent-mode)
+         (org-mode . (lambda()
+                       (olivetti-mode)
+                       (olivetti-set-width 80)))
+         (org-mode . (lambda () (org-indent-mode -1)))
+         (org-mode . variable-pitch-mode)
          (org-mode . (lambda ()
                        (setq org-preview-latex-image-directory "~/Pictures/ltximg/")
                        (org-latex-preview '(16))))
@@ -217,6 +235,7 @@
          ;;               (texfrag-document)))
          )
   :config
+  ;; (org-indent-mode -1)
   (add-to-list 'org-modules 'org-drill)
   (add-to-list 'org-latex-packages-alist '("" "bm" t))
   (add-to-list 'org-latex-packages-alist '("" "listings" t))
@@ -241,6 +260,8 @@
         org-startup-indented t
         org-confirm-babel-evaluate nil
         org-hide-leading-stars t
+        org-indent-indentation-per-level 1
+        org-adapt-indentation nil
         org-latex-prefer-user-labels t
         org-id-link-to-org-use-id t
         org-bullets-bullet-list '("#")
@@ -279,9 +300,7 @@
   :config
   (setq org-drill-scope 'file))
 
-(use-package olivetti
-  :custom
-  (olivetti-body-width 100))
+(use-package olivetti)
 
 ;; (use-package poet-theme)
 (use-package auctex
@@ -394,7 +413,9 @@
               (load-theme 'doom-one-light t))))
 (use-package modus-operandi-theme)
 (use-package modus-vivendi-theme) 
-
+(use-package poet-theme
+  :config
+  (setq poet-theme-variable-headers nil))
 
 (use-package org-download)
 
