@@ -3,3 +3,11 @@
 	email = MIN605472@users.noreply.github.com
 [core]
 	editor = vim
+	autocrlf = false
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = secretservice
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[pull]
+	rebase = true

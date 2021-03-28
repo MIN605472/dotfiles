@@ -1,9 +1,9 @@
-! URxvt.letterSpace: -1
+URxvt.letterSpace: -1
 ! URxvt.internalBorder: 10
 ! URxvt.font: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1
 ! URxvt.boldFont: -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1
-URxvt.font: xft:Iosevka:size=9:style=medium
-URxvt.boldFont: xft:Iosevka:size=9:style=bold
+URxvt.font: xft:IBM Plex Mono Medm:size=11:style=medium
+URxvt.boldFont: xft:IBM Plex Mono Medm:size=11:style=bold
 URxvt.scrollBar: false
 URxvt.perl-ext-common: default,matcher,selection-to-clipboard
 URxvt.url-launcher: /usr/bin/xdg-open

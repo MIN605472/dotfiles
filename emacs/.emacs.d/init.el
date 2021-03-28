@@ -19,16 +19,20 @@
 (setq gdb-many-windows t
       gdb-show-main t)
 
+;; (add-to-list 'load-path "~/.emacs.d/elpa/compat-28.1.1.0/")
+
 (setq sentence-end-double-space nil)
 (subword-mode)
 
 ;; Packages
 (require 'package)
+
 ;; (setq package-enable-at-startup nil)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)  
   ;; (add-to-list 'package-archives (cons "org" (concat proto "://orgmode.org/elpa/")) t)
   (add-to-list 'package-archives (cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/")) t)
   (when (< emacs-major-version 24)
@@ -50,10 +54,16 @@
 (tool-bar-mode -1)
 
 ;; (use-package all-the-icons)
-
-;; (use-package doom-modeline
-;;   :defer t
-;;   :hook (after-init . doom-modeline-init))
+(use-package nerd-icons
+  ;; :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 
 ;; (use-package auto-package-update
 ;;   :config
@@ -82,7 +92,10 @@
 
 (use-package magit
   :bind
-  ("C-x g" . 'magit-status))
+  ("C-x g" . 'magit-status)
+  :config
+  (transient-append-suffix 'magit-merge "-f"
+    '("-a" "Allow unrelated histories" "--allow-unrelated-histories")))
 
 (use-package nov
   :config
@@ -103,18 +116,18 @@
 ;;   :config
 ;;   (evil-mode 1))
 
-(require 'mu4e)
-(use-package mu4e-contrib
-  :ensure nil
-  :custom
-  (mu4e-headers-date-format "%Y-%m-%d %H.%M")
-  (mu4e-use-fancy-chars nil)
-  (mu4e-completing-read-function 'ivy-completing-read)
-  (mu4e-confirm-quit nil)
-  (mu4e-html2text-command 'mu4e-shr2text)
-  :config
-  (add-to-list 'mu4e-view-actions
-               '("ViewInBrowser" . mu4e-action-view-in-browser) t))
+;; (require 'mu4e)
+;; (use-package mu4e-contrib
+;;   :ensure nil
+;;   :custom
+;;   (mu4e-headers-date-format "%Y-%m-%d %H.%M")
+;;   (mu4e-use-fancy-chars nil)
+;;   (mu4e-completing-read-function 'ivy-completing-read)
+;;   (mu4e-confirm-quit nil)
+;;   (mu4e-html2text-command 'mu4e-shr2text)
+;;   :config
+;;   (add-to-list 'mu4e-view-actions
+;;                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 
 (use-package pdf-tools
   :config
@@ -131,9 +144,9 @@
   :config
   (counsel-projectile-mode 1))
 
-(use-package rainbow-delimiters
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+;; (use-package rainbow-delimiters
+  ;; :config
+  ;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 (use-package expand-region
   :config
@@ -158,8 +171,10 @@
 
 ;; Window management
 (use-package ace-window
+  :bind (("M-o" . ace-window))
   :config
-  (global-set-key (kbd "M-o") 'ace-window))
+  ;; (global-set-key (kbd "M-o") 'ace-window)
+  )
 
 (defun mine-counsel-org-goto-all ()
   (interactive)
@@ -198,12 +213,12 @@
             :caller 'counsel-org-link))
 
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Medium 11"))
+             '(font . "IBM Plex Mono Medm"))
 ;; (set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
-(set-face-attribute 'default nil :family "Iosevka Medium" :height 110 :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka Medium" :inherit 'default :height 'unspecified :weight 'regular)
-(set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
-;; (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 'unspecified :inherit 'default)
+(set-face-attribute 'default nil :family "IBM Plex Mono Medm" :height 105 :weight 'medium)
+(set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono Medm" :inherit 'default :height 'unspecified :weight 'medium)
+;; (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
+(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 'unspecified :inherit 'default)
 (use-package org
   :ensure org
   ;; :pin org
@@ -243,13 +258,18 @@
    'org-babel-load-languages
    '((latex . t)
      (python . t)
-     (shell . t)))
+     (shell . t)
+     (elasticsearch . t)
+     ))
   (setq org-image-actual-width nil)
   ;; fix color handling in org-preview-latex-fragment
   (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
     (plist-put dvipng--plist :use-xcolor t)
     (plist-put dvipng--plist :image-converter '("dvipng -D %D -T tight -o %O %f")))
-  
+
+  (setq org-export-with-timestamps nil)
+  (setq org-export-time-stamp-file nil)
+  (setq org-html-validation-link nil)
   (setq org-default-notes-file "~/Dropbox/org/refile.org"
         org-drill-add-random-noise-to-intervals-p t
         ;; org-startup-indented t
@@ -282,7 +302,14 @@
            ,(concat "* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\n"
                     "SCHEDULED: %^t\n"
                     ":PROPERTIES:\n:CAPTURED: %U\n:END:\n\n"
-                    "%i%?")))
+                    "%i%?"))
+          ("b" "Basic task for future review" entry
+           (file+headline "~/Dropbox/org/tasks.org" "Basic tasks that need to be reviewed")
+           ,(concat "* %^{Title}\n"
+                    ":PROPERTIES:\n"
+                    ":CAPTURED: %U\n"
+                    ":END:\n\n"
+                    "%i%l")))
         org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
                              ("~/gtd/someday.org" :level . 1)
                              ("~/gtd/tickler.org" :maxlevel . 2))))
@@ -444,7 +471,7 @@
 ;;       (eval-print-last-sexp)))
 ;;   (load bootstrap-file nil 'nomessage))
 
-(use-package hyperbole)
+;; (use-package hyperbole)
 ;; (use-package interleave)
 (use-package org-noter
   :bind (("C-c n p" . org-noter-insert-precise-note)
@@ -475,3 +502,58 @@
 (use-package web-mode)
 (use-package es-mode)
 (setq undo-tree-auto-save-history nil)
+(use-package ob-http)
+(use-package vterm)
+(use-package all-the-icons)
+(use-package ob-restclient)
+(setq scroll-preserve-screen-position t)
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(use-package typescript-mode
+  :mode (("\\.tsx" . typescript-mode))
+  :config
+  (setq typescript-indent-level 2
+        indent-tabs-mode nil        
+        js-indent-level 2)
+  )
+
+
+
+
+(put 'narrow-to-region 'disabled nil)
+
+(use-package es-mode
+  :mode (("\\.es$" . es-mode))
+  :config
+  (add-hook 'es-result-mode-hook 'hs-minor-mode))
+(setq gc-cons-threshold (* 256 1024 1024))
+(setq gc-cons-percentage 0.6)
+(setq eval-expression-print-length nil)
+(setq eval-expression-print-level nil)
+(use-package php-mode)
+(use-package json-mode)
+(use-package verb)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((verb . t)))
+
+
+(add-to-list 'verb-content-type-handlers
+             '("application/.+?\\+json" verb-handler-json))
+(use-package groovy-mode)
+(use-package sqlformat)
+(setq sqlformat-command 'pgformatter)
+(setq sqlformat-args '("-s2" "-g"))
+(use-package xml-format
+  :demand t
+  :after nxml-mode)
+(use-package ef-themes)
+(use-package org-modern)
+(use-package flycheck)
+(use-package lsp-mode)

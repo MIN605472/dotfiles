@@ -1,0 +1,14 @@
+source ~/.vimrc
+
+set clipboard+=unnamed
+
+nmap <leader>f  <Action>(SearchEverywhere)
+nmap <leader>wz <Action>(ToggleZenMode)
+nmap <leader>b  <Action>(RecentFiles)
+nmap <leader>a  <Action>(FindInPath)
+
+set surround
+
+set NERDTree
+let g:NERDTreeMapActivateNode="l"
+let g:NERDTreeMapJumpParent="h"
