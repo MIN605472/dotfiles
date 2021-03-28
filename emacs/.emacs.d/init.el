@@ -199,7 +199,7 @@
              '(font . "Iosevka 12"))
 ;; (set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
 (set-face-attribute 'default nil :family "Iosevka" :height 120 :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 110)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 90 :weight 'regular)
 ;; (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
 (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 130)
 (use-package org
@@ -273,11 +273,13 @@
         org-deadline-warning-days 365
         org-agenda-dim-blocked-tasks nil
         org-agenda-compact-blocks t
-        org-capture-templates '(("n" "note" entry (file org-default-notes-file)
-                                 "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-                                ("j" "Journal" entry (file+datetree "~/org/tfg/journal.org") "* %? %^g\n " :time-prompt t)
-                                ("p" "Project" entry (file+headline "~/org/todo.org" "Projects")
-                                 (file "~/.emacs.d/org/template/new_project.org")))
+        org-capture-templates
+        `(("t" "Task with a due date" entry
+           (file+headline "~/Dropbox/org/tasks.org" "Task list with a date")
+           ,(concat "* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\n"
+                    "SCHEDULED: %^t\n"
+                    ":PROPERTIES:\n:CAPTURED: %U\n:END:\n\n"
+                    "%i%?")))
         org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
                              ("~/gtd/someday.org" :level . 1)
                              ("~/gtd/tickler.org" :maxlevel . 2))))
