@@ -29,7 +29,7 @@ font pango:Iosevka Medium 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec urxvtc
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -159,11 +159,12 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id i3-msg 'workspace 1; exec firefox'
 exec --no-startup-id polybar -r main
 exec --no-startup-id dropbox
-# exec --no-startup-id urxvtd
+exec --no-startup-id urxvtd
+exec --no-startup-id ~/.config/i3/mouse_buttons.sh
 
 bindsym $mod+grave workspace back_and_forth
 bindsym $mod+q exec ~/.config/i3/mouse_sens.sh
-bindsym --whole-window button8 exec ~/.config/i3/mouse_sens.sh
+bindsym --whole-window button9 exec ~/.config/i3/mouse_sens.sh
 
 bindsym Mod1+Tab exec rofi -show window
 

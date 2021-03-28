@@ -47,18 +47,11 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-(set-face-attribute 'default nil
-		    :font "Hack"
-		    :height 110
-        :weight 'regular)
-(add-to-list 'default-frame-alist
-             '(font . "Iosevka Medium 11"))
-
 ;; (use-package all-the-icons)
 
-(use-package doom-modeline
-  :defer t
-  :hook (after-init . doom-modeline-init))
+;; (use-package doom-modeline
+;;   :defer t
+;;   :hook (after-init . doom-modeline-init))
 
 ;; (use-package auto-package-update
 ;;   :config
@@ -166,9 +159,6 @@
   :config
   (global-set-key (kbd "M-o") 'ace-window))
 
-
-
-
 (defun mine-counsel-org-goto-all ()
   (interactive)
   (dolist (file (directory-files-recursively org-roam-directory ".*\.org$"))
@@ -205,8 +195,10 @@
             :history 'counsel-org-link-history
             :caller 'counsel-org-link))
 
+(add-to-list 'default-frame-alist
+             '(font . "Iosevka 12"))
 ;; (set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
+(set-face-attribute 'default nil :family "Iosevka" :height 120 :weight 'regular)
 (set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 110)
 ;; (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
 (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 130)
@@ -224,9 +216,9 @@
          (org-mode . org-bullets-mode)
          (org-mode . (lambda()
                        (olivetti-mode)
-                       (olivetti-set-width 80)))
+                       (olivetti-set-width 110)))
          (org-mode . (lambda () (org-indent-mode -1)))
-         (org-mode . variable-pitch-mode)
+         ;; (org-mode . variable-pitch-mode)
          (org-mode . (lambda ()
                        (setq org-preview-latex-image-directory "~/Pictures/ltximg/")
                        (org-latex-preview '(16))))
@@ -402,20 +394,30 @@
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
 (use-package doom-themes
   :config
-  ;; (load-theme 'doom-solarized-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
-  (doom-themes-org-config)
-  ;; fix theme when frame created by emacsclient
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (select-frame frame)
-              (load-theme 'doom-one-light t))))
-(use-package modus-operandi-theme)
-(use-package modus-vivendi-theme) 
+  (doom-themes-org-config))
+
+(use-package modus-themes
+  :config
+  (setq modus-themes-links 'underline-only
+        modus-themes-mode-line 'borderless
+        modus-themes-headings
+        '((1 . rainbow-section)
+          (2 . rainbow-section)
+          (3 . rainbow-section)
+          (t . rainbow-section))))
+
 (use-package poet-theme
   :config
   (setq poet-theme-variable-headers nil))
+
+(load-theme 'modus-vivendi t)
+;; fix theme when frame created by emacsclient
+(add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (select-frame frame)
+              (load-theme 'modus-vivendi t)))
 
 (use-package org-download)
 
