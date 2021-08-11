@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Auto-save and auto-backup. Disable them for now.
 (setq auto-save-default nil)
 (setq make-backup-files nil)
@@ -196,12 +197,12 @@
             :caller 'counsel-org-link))
 
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka 12"))
+             '(font . "Iosevka Medium 11"))
 ;; (set-face-attribute 'variable-pitch nil :family "Libre Baskerville" :height 1.0)
-(set-face-attribute 'default nil :family "Iosevka" :height 120 :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 90 :weight 'regular)
-;; (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
-(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 130)
+(set-face-attribute 'default nil :family "Iosevka Medium" :height 110 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka Medium" :inherit 'default :height 'unspecified :weight 'regular)
+(set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
+;; (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 'unspecified :inherit 'default)
 (use-package org
   :ensure org-plus-contrib
   :pin org
@@ -380,17 +381,20 @@
   ;;        ("C-c d x" . 'zetteldeft-count-words)))
 
 (use-package org-roam
-  :hook 
-  (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/Dropbox/org")
-  :bind (:map org-roam-mode-map
-              (("C-c d l" . org-roam)
-               ("C-c d d" . 'deft)
-               ("C-c d f" . org-roam-find-file)
-               ("C-c d g" . org-roam-show-graph))
-              :map org-mode-map
-              (("C-c d i" . org-roam-insert))))
+  (org-roam-directory (file-truename "~/Dropbox/org"))
+  :bind (("C-c d l" . org-roam-buffer-toggle)
+         ("C-c d d" . 'deft)
+         ("C-c d f" . org-roam-node-find)
+         ("C-c d g" . org-roam-graph)
+         ("C-c d c" . org-roam-capture)
+         ("C-c d i" . org-roam-node-insert))
+  :config
+  (org-roam-setup)
+  (require 'org-roam-protocol))
+(setq org-roam-v2-ack t)
+(setq org-roam-db-gc-threshold most-positive-fixnum)
+(setq org-roam-directory (file-truename "~/Dropbox/org"))
 
 
 ;; Other themes: kaolin-themes, ample-theme, doom-themes
@@ -460,3 +464,8 @@
   :config
   (texfrag-global-mode)
   )
+(put 'narrow-to-region 'disabled nil)
+
+(use-package typescript-mode)
+(use-package web-mode)
+(use-package es-mode)
