@@ -29,7 +29,8 @@
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  (add-to-list 'package-archives (cons "org" (concat proto "://orgmode.org/elpa/")) t)
+  ;; (add-to-list 'package-archives (cons "org" (concat proto "://orgmode.org/elpa/")) t)
+  (add-to-list 'package-archives (cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/")) t)
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
@@ -204,8 +205,8 @@
 (set-face-attribute 'variable-pitch nil :family "Spectral" :height 130)
 ;; (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif" :height 'unspecified :inherit 'default)
 (use-package org
-  :ensure org-plus-contrib
-  :pin org
+  :ensure org
+  ;; :pin org
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
@@ -214,11 +215,11 @@
          ("C-c l l H" .  mine-counsel-org-goto-all))
   :hook ((org-mode . visual-line-mode)
          (org-mode . flyspell-mode)
-         (org-mode . org-bullets-mode)
+         ;; (org-mode . org-bullets-mode)
          (org-mode . (lambda()
                        (olivetti-mode)
                        (olivetti-set-width 110)))
-         (org-mode . (lambda () (org-indent-mode -1)))
+         ;; (org-mode . (lambda () (org-indent-mode -1)))
          ;; (org-mode . variable-pitch-mode)
          (org-mode . (lambda ()
                        (setq org-preview-latex-image-directory "~/Pictures/ltximg/")
@@ -250,9 +251,9 @@
   
   (setq org-default-notes-file "~/Dropbox/org/refile.org"
         org-drill-add-random-noise-to-intervals-p t
-        org-startup-indented t
+        ;; org-startup-indented t
         org-confirm-babel-evaluate nil
-        org-hide-leading-stars t
+        ;; org-hide-leading-stars t
         org-indent-indentation-per-level 1
         org-adapt-indentation nil
         org-latex-prefer-user-labels t
@@ -284,7 +285,7 @@
         org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
                              ("~/gtd/someday.org" :level . 1)
                              ("~/gtd/tickler.org" :maxlevel . 2))))
-
+(use-package org-contrib)
 (use-package org-bullets)
 
 (use-package org-ref
@@ -418,12 +419,12 @@
   :config
   (setq poet-theme-variable-headers nil))
 
-(load-theme 'modus-vivendi t)
+(load-theme 'modus-operandi t)
 ;; fix theme when frame created by emacsclient
 (add-hook 'after-make-frame-functions
             (lambda (frame)
               (select-frame frame)
-              (load-theme 'modus-vivendi t)))
+              (load-theme 'modus-operandi t)))
 
 (use-package org-download)
 
