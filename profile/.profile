@@ -11,11 +11,13 @@ alias df='df -h'
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
-
 # node
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
+#spark
 export PATH="$PATH:$HOME/.node_modules/bin"
 export SPARK_HOME="$HOME/.local/bin/spark-2.4.4-bin-hadoop2.7"
 export PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
+# flutter
+export PATH=$PATH:$HOME/.local/bin/flutter/bin

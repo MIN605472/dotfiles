@@ -238,6 +238,7 @@
   (add-to-list 'org-latex-packages-alist '("" "pgf" t))
   (add-to-list 'org-latex-packages-alist '("" "blkarray" t))
   (add-to-list 'org-latex-packages-alist '("" "bbm" t))
+  (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((latex . t)
@@ -337,7 +338,7 @@
 
 (define-key global-map "\M-Q" 'unfill-paragraph)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
-(use-package jsx-mode)
+;; (use-package jsx-mode)
 (use-package scala-mode)
 
 
@@ -405,21 +406,23 @@
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
-(use-package modus-themes
-  :config
-  (setq modus-themes-links 'underline-only
-        modus-themes-mode-line 'borderless
-        modus-themes-headings
-        '((1 . rainbow-section)
-          (2 . rainbow-section)
-          (3 . rainbow-section)
-          (t . rainbow-section))))
+(use-package modus-themes)
+  ;; :config
+  ;; (setq modus-themes-links 'underline-only
+        ;; modus-themes-mode-line 'borderless
+        ;; modus-themes-headings
+        ;; '((1 . rainbow-section)
+        ;;   (2 . rainbow-section)
+        ;;   (3 . rainbow-section)
+        ;;   (t . rainbow-section))
+        ;; )
+  ;; )
 
 (use-package poet-theme
   :config
   (setq poet-theme-variable-headers nil))
 
-(load-theme 'modus-operandi t)
+;; (load-theme 'modus-operandi t)
 ;; fix theme when frame created by emacsclient
 (add-hook 'after-make-frame-functions
             (lambda (frame)
@@ -453,6 +456,7 @@
   (texfrag-header-default
 "\\documentclass{article}
 \\usepackage{amsmath,amsfonts}
+\\usepackage{mathtools}
 \\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
 \\usepackage{bm}
@@ -470,3 +474,4 @@
 (use-package typescript-mode)
 (use-package web-mode)
 (use-package es-mode)
+(setq undo-tree-auto-save-history nil)

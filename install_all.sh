@@ -29,7 +29,7 @@ function install_pkgs {
         sxiv \
         ntfs-3g \
         udisks2 \
-        compton \
+        picom \
         polybar \
         dunst \
         gvim \
@@ -37,8 +37,7 @@ function install_pkgs {
         mpv \
         zathura-pdf-mupdf \
         lxappearance \
-        arc-gtk-theme \
-        arc-icon-theme \
+        yaru \
         gnome-themes-standard \
         gtk-engine-murrine \
         pulseaudio \
@@ -52,7 +51,8 @@ function install_pkgs {
         firefox \
         openssh \
         mesa-vdpau \
-        libva-vdpau-driver
+        libva-vdpau-driver \
+        detox
 }
 
 function install_oh_my_zsh {
