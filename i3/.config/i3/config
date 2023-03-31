@@ -172,8 +172,8 @@ bindsym Mod1+Tab exec rofi -show window
 smart_borders on
 hide_edge_borders smart
 new_window 1pixel
-gaps inner 20
-gaps outer 5
+# gaps inner 20
+# gaps outer 5
 # for_window [class="jetbrains-idea"] focus
 for_window [class=".*"] border pixel 3
 bindsym $mod+z sticky toggle
